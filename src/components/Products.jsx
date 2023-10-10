@@ -7,10 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import ProtectedLayout from '../components/layout/ProtectedLayout';
-import DSC_Neo from '../assets/DSC NEO.png';
-import SEVEN from '../assets/SEVEN.png';
-import GO from '../assets/GO.png';
-import Qolsys from '../assets/Qolsys.png';
+
 
 export default function Products() {
     const [items, setItems] = useState([]);
