@@ -210,9 +210,9 @@ export default function Dispatches() {
                                     </Table>
                                 </TableContainer>
 
-                                <div className="floating-button-container">
+                                {/* <div className="floating-button-container">
                                     <button className="add-button" onClick={() => setOpenModal(true)}>+</button>
-                                </div>
+                                </div> */}
 
                                 <Modal
                                     show={openModal}
