@@ -31,6 +31,7 @@ export default function Item() {
     const { user, signOut } = useAuthenticator((context) => [context.user]);
 
     const [orders, setOrders] = useState(null);
+    const [getAllOrders, setGetAllOrders] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -42,6 +43,44 @@ export default function Item() {
     const isAdminOrStaff = userType === 'admin' || userType === 'staff';
     const loginUserName = user.attributes.name;
 
+    //Get all order
+    useEffect(() => {
+        Auth.currentSession()
+            .then((session) => {
+                const token = session.getAccessToken().getJwtToken();
+
+                const apiUrl = 'http://localhost:8080/api/order';
+                const headers = {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                    // Add any other headers you may need
+                };
+
+                // Make the API call using fetch
+                fetch(apiUrl, { headers })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then((orders) => {
+                        setGetAllOrders(orders);
+                        setIsLoading(false);
+                    })
+                    .catch((error) => {
+                        setError(error);
+                        setIsLoading(false);
+                    });
+            })
+            .catch((error) => {
+                console.log('Error getting authentication token:', error);
+            });
+
+        setIsLoading(true);
+    }, []); 
+
+    // Gets all orders for particular user
     useEffect(() => {
         Auth.currentSession()
             .then(session => {
@@ -219,7 +258,7 @@ export default function Item() {
                                         </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                        <AddOrder orderNo={orders.length + 1} userType={userType} handleOrderSubmit={handleOrderSubmit}></AddOrder>
+                                        <AddOrder orderNo={getAllOrders.length + 1} userType={userType} handleOrderSubmit={handleOrderSubmit}></AddOrder>
                                     </Modal.Body>
                                 </Modal>
                             </div>
