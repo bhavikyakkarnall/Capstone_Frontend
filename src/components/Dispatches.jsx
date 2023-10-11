@@ -172,11 +172,11 @@ export default function Dispatches() {
                         {dispatches && (
                             <div style={{ margin: "10px" }}>
                                 <h2>Dispatches</h2>
-                                <Form>
+                                {/* <Form>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Control type="text" placeholder="Search..." />
                                     </Form.Group>
-                                </Form>
+                                </Form> */}
 
                                 <TableContainer>
                                     <Table>

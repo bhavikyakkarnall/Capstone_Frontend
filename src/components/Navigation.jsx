@@ -28,7 +28,7 @@ function Navigation() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <NavLink style={{color:"black", marginRight: "10px", marginLeft: "10px", textDecoration: "none"}} to="/products">Products</NavLink>
+                        {/* <NavLink style={{color:"black", marginRight: "10px", marginLeft: "10px", textDecoration: "none"}} to="/products">Products</NavLink> */}
                         {isAdminOrStaff && <NavLink style={{color:"black", marginRight: "10px", marginLeft: "10px", textDecoration: "none"}}  to="/dispatches">Dispatches</NavLink>}
                         {isAdminOrSubbie && (<NavLink style={{color:"black", marginRight: "10px", marginLeft: "10px", textDecoration: "none"}}  to="/orders">Orders</NavLink>)}
                         <NavLink style={{color:"black", marginRight: "10px", marginLeft: "10px", textDecoration: "none"}}  to="/inventory-items">Inventory</NavLink>

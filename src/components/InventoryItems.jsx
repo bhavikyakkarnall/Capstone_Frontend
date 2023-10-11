@@ -92,15 +92,11 @@ export default function InventoryItems() {
                         {items && (
                             <div style={{ margin: "10px" }}>
                                 <h2>Inventory Items</h2>
-                                <Form>
+                                {/* <Form>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Control type="text" placeholder="Search..." />
                                     </Form.Group>
-                                </Form>
-
-                                <div className="floating-button-container">
-                                    <button className="add-button">+</button>
-                                </div>
+                                </Form> */}
 
                                 <Table striped="columns">
                                     <thead>

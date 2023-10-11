@@ -155,11 +155,11 @@ export default function Item() {
                         {orders && (
                             <div style={{ margin: "10px" }}>
                                 <h2>Order</h2>
-                                <Form>
+                                {/* <Form>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
                                         <Form.Control type="text" placeholder="Search..." />
                                     </Form.Group>
-                                </Form>
+                                </Form> */}
 
                                 <TableContainer>
                                     <Table>

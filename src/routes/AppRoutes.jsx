@@ -18,12 +18,6 @@ export default function AppRoutes(props) {
 
             <Route index element={
                 <ProtectedRoute>
-                    <Home {...props}></Home>
-                </ProtectedRoute>
-            } />
-
-            <Route path='/products' element={
-                <ProtectedRoute>
                     <Products {...props} />
                 </ProtectedRoute>
             } />
