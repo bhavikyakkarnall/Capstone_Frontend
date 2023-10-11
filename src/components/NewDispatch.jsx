@@ -23,37 +23,10 @@ const Staffs = [
     { "userId": "005", "name": "Richard", "userType": "Subbie", "company": "1Tech", "Address": "Mt.Wellington, Auckland", "phone": "02112348678", "email": "richard@test.com" },
 ];
 
-// const Items = [
-//     {cs: "2810001", ItemName: "EVE", serial: "2810000001"},
-//     {cs: "2810002", ItemName: "EVE", serial: "2810000002"},
-//     {cs: "2810003", ItemName: "EVE", serial: "2810000003"},
-//     {cs: "2810004", ItemName: "EVE", serial: "2810000004"},
-//     {cs: "2810005", ItemName: "EVE", serial: "2810000005"},
-//     {cs: "2810006", ItemName: "EVE", serial: "2810000006"},
-//     {cs: "2810007", ItemName: "EVE", serial: "2810000007"},
-//     {cs: "2810008", ItemName: "EVE", serial: "2810000008"},
-//     {cs: "2840001", ItemName: "GO", serial: "2840000001"},
-//     {cs: "2840002", ItemName: "GO", serial: "2840000002"},
-//     {cs: "2840003", ItemName: "GO", serial: "2840000003"},
-//     {cs: "2840004", ItemName: "GO", serial: "2840000004"},
-//     {cs: "2840005", ItemName: "GO", serial: "2840000005"},
-//     {cs: "2840006", ItemName: "GO", serial: "2840000006"},
-//     {cs: "2840007", ItemName: "GO", serial: "2840000007"},
-//     {cs: "2840008", ItemName: "GO", serial: "2840000008"},
-//     {cs: "2610001", ItemName: "DSC Neo", serial: "2610000001"},
-//     {cs: "2610002", ItemName: "DSC Neo", serial: "2610000002"},
-//     {cs: "2610003", ItemName: "DSC Neo", serial: "2610000003"},
-//     {cs: "2610004", ItemName: "DSC Neo", serial: "2610000004"},
-//     {cs: "2610005", ItemName: "DSC Neo", serial: "2610000005"},
-//     {cs: "2610006", ItemName: "DSC Neo", serial: "2610000006"},
-//     {cs: "2610007", ItemName: "DSC Neo", serial: "2610000007"},
-//     {cs: "2610008", ItemName: "DSC Neo", serial: "2610000008"},
-//     {cs: "2610009", ItemName: "DSC Neo", serial: "2610000009"}
-// ]
 
 
-
-export default function NewDispatch() {
+export default function NewDispatch({ orderDetails, onDispatchSubmitted, onFormDataSubmitted }) {
+    // console.log("order Details: ", orderDetails)
     const [selectedReceiver, setSelectedReceiver] = useState('Shona');
     const [receiverData, setReceiverData] = useState({
         receiverName: 'User',
@@ -157,7 +130,10 @@ export default function NewDispatch() {
 
     const gatherFormData = () => {
         const formData = {
-            receiverName: selectedReceiver,
+            orderId: orderDetails.orderId,
+            userName: selectedReceiver,
+            userId: receiverData.userId,
+            status: "completed",
             companyName: receiverData.companyName,
             address: receiverData.Address,
             phone: receiverData.phone,
@@ -171,6 +147,9 @@ export default function NewDispatch() {
     const handleSubmit = () => {
         const formData = gatherFormData();
         console.log(formData);
+        // Call the function to pass the formData to the parent component
+    onFormDataSubmitted(formData);
+        onDispatchSubmitted();
     };
 
     return (

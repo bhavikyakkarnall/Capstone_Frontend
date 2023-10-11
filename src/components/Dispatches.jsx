@@ -28,6 +28,8 @@ export default function Dispatches() {
     const { user, signOut } = useAuthenticator((context) => [context.user]);
 
     const [dispatches, setDispatches] = useState(null);
+    const [orderId, setOrderId] = useState(null);
+    const [orderedProducts, setOrderedProducts] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -36,6 +38,8 @@ export default function Dispatches() {
     const [selectedOrder, setSelectedOrder] = useState(null);
 
     const [selectedOrderDetails, setSelectedOrderDetails] = useState(null);
+
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const userType = user.attributes.zoneinfo
     const isAdminOrStaff = userType === 'admin' || userType === 'staff';
@@ -86,6 +90,9 @@ export default function Dispatches() {
     }
 
     const handleDispatchClick = (order) => {
+        setOrderId(order._id);
+        setOrderedProducts(order.orderedProduct)
+        console.log("ordered product ", order.orderedProduct);
         setSelectedOrder(order);
         setSelectedOrderDetails({
             orderId: order.orderId,
@@ -93,6 +100,60 @@ export default function Dispatches() {
         });
         setOpenModal(true);
     }
+    const handleDispatchSubmitted = () => {
+        setIsSubmitted(true);
+    };
+
+    // Define the update data function here
+    const updateDataInDatabase = async (updatedData) => {
+        try {
+            const updateApiUrl = `http://localhost:8080/api/order/${orderId}`; // Replace with your API endpoint
+            const token = await Auth.currentSession().then((session) => session.getAccessToken().getJwtToken());
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            };
+
+            const requestBody = updatedData;
+
+            const response = await fetch(updateApiUrl, {
+                method: 'PUT',
+                headers: headers,
+                body: JSON.stringify(requestBody),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Handle the response (e.g., show a success message)
+            console.log('Data updated successfully');
+        } catch (error) {
+            console.error('Error updating data:', error);
+        }
+    };
+
+    const handleFormDataFromNewDispatch = (formData) => {
+        // You can access the formData here and perform any necessary actions
+        console.log(formData);
+
+        const updatedData = {
+            orderId: formData.orderId,
+            userId: formData.userId,
+            userName: formData.userName,
+            status: formData.status,
+            tracking: formData.tracking,
+            orderedProduct: orderedProducts,
+            items: formData.tableRows,
+        };
+
+        // Call the update function
+        updateDataInDatabase(formData);
+    };
+
+
+
+
 
     return (
         <>
@@ -160,25 +221,9 @@ export default function Dispatches() {
                                                         <TableCell colSpan={7} style={{ paddingBottom: 0, paddingTop: 0, border: "0px" }}>
                                                             <Collapse in={open.includes(index)} timeout="auto" unmountOnExit>
                                                                 <Box style={{ width: "100%", minHeight: "36px", textAlign: "center" }}>
-                                                                    {dispatch.status === "Completed" ? (
+                                                                    {dispatch.status === "completed" ? (
                                                                         <Form>
-                                                                            <h6 style={{ marginTop: "10px" }}>Tracking#: {dispatch.tracking} </h6>
-                                                                            <Table>
-                                                                                <TableHead>
-                                                                                    <TableRow>
-                                                                                        <TableCell>CS#</TableCell>
-                                                                                        <TableCell>Item</TableCell>
-                                                                                        <TableCell>Serial#</TableCell>
-                                                                                    </TableRow>
-                                                                                </TableHead>
-                                                                                <TableBody>
-                                                                                    <TableRow>
-                                                                                        <TableCell></TableCell>
-                                                                                        <TableCell></TableCell>
-                                                                                        <TableCell></TableCell>
-                                                                                    </TableRow>
-                                                                                </TableBody>
-                                                                            </Table>
+                                                                            <h6>Order Completed</h6>
                                                                         </Form>
                                                                     ) : (
                                                                         <div id='submiited'>
@@ -223,7 +268,7 @@ export default function Dispatches() {
                                         </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                        <NewDispatch orderDetails={selectedOrderDetails} />
+                                        <NewDispatch orderDetails={selectedOrderDetails} onDispatchSubmitted={handleDispatchSubmitted} onFormDataSubmitted={handleFormDataFromNewDispatch} />
                                     </Modal.Body>
                                 </Modal>
                             </div>
