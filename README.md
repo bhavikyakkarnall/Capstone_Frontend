@@ -1,8 +1,26 @@
-# React + Vite
+Technology Stack:
+    React
+    Bootstrap
+    AWS Cognito
+    AWS CloudFront
+    AWS S3
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Local setup:
+    1. Clone the repo to your local
+    2. cd Capstone_Frontend
+    3. npm install
+    4. npm run dev
+    5. Open the browser of your choice
+    6. Open http://localhost:5173 to launch the application
 
-Currently, two official plugins are available:
+Deployment:
+    A Github Actions pipeline automatically deploys the code to AWS CloudFront and AWS S3 when any change is pushed or merged to the main branch.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Authentication:
+    AWS Cognito
+
+Architecture:
+    ![Alt text](image.png)
+
+Support
+    Bhavik Yakkarnall - (Email: byakkarnall@gmail.com)
